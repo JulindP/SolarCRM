@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import LeadList
+from .views import LeadListView
 
 urlpatterns = [
-    path("", LeadList.as_view(), name="lead-list"),
+    path("", LeadListView.as_view(), name="lead-list"),
 ]
