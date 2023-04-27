@@ -23,14 +23,14 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-white" style="width:100%" id="dataTable"
+                            <table class="table table-fixed table-hover text-white" style="width:100%" id="dataTable"
                                 cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Age</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col" class="col-1">First Name</th>
+                                        <th scope="col" class="col-1">Last Name</th>
+                                        <th scope="col" class="col-1">Age</th>
+                                        <th scope="col" class="col-1">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,7 +39,11 @@
                                         <td>{{ lead.first_name }}</td>
                                         <td>{{ lead.last_name }}</td>
                                         <td>{{ lead.age }}</td>
-                                        <td>ACTION</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm">View</button>
+                                            <button type="button" class="btn btn-warning btn-sm">Update</button>
+                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
