@@ -40,9 +40,17 @@
                                         <td>{{ lead.last_name }}</td>
                                         <td>{{ lead.age }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm">View</button>
-                                            <button type="button" class="btn btn-warning btn-sm">Update</button>
-                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                            <!-- Button trigger detailModal -->
+                                            <button type="button" class="btn btn-info btn-sm me-1"
+                                                data-bs-toggle="modal" data-bs-target="#detailModal{{ lead.id }}"
+                                                href="{% url 'lead-detail' lead.id %}">
+                                                <i class="fa-solid fa-circle-info fa-lg"></i>
+                                            </button>
+                                            <!-- detailModal -->
+                                            {% include 'leads/lead_detail.html' %}
+
+                                            <button type="button" class="btn btn-warning btn-sm me-1">Update</button>
+                                            <button type="button" class="btn btn-danger btn-sm me-1">Delete</button>
                                         </td>
                                     </tr>
                                     {% endfor %}
