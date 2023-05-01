@@ -13,6 +13,7 @@ urlpatterns = [
     path("signup/", SignupView.as_view(), name="signup"),
     path("admin/", admin.site.urls),
     path("leads/", include("leads.urls")),
+    path("agents/", include("agents.urls")),
 ]
 
 if settings.DEBUG:
