@@ -5,7 +5,8 @@ from django.dispatch import receiver
 
 
 class User(AbstractUser):
-    pass
+    is_supervisor = models.BooleanField(default=True)
+    is_agent = models.BooleanField(default=False)
 
 
 class Supervisor(models.Model):

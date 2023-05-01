@@ -9,14 +9,20 @@ from .forms import AgentModelForm
 
 class AgentListView(LoginRequiredMixin, generic.ListView):
     template_name = "agents/agent_list.html"
-    model = Agent
     context_object_name = "agents"
+
+    def get_queryset(self):
+        supervisor_team = self.request.user.supervisor
+        return Agent.objects.filter(team=supervisor_team)
 
 
 class AgentDetailView(LoginRequiredMixin, generic.ListView):
     template_name = "agents/agent_detail.html"
-    model = Agent
     context_object_name = "agent"
+
+    def get_queryset(self):
+        supervisor_team = self.request.user.supervisor
+        return Agent.objects.filter(team=supervisor_team)
 
 
 class AgentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
@@ -34,14 +40,20 @@ class AgentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateVie
 
 class AgentUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     template_name = "agents/agent_update.html"
-    model = Agent
     form_class = AgentModelForm
     success_url = reverse_lazy("agent-list")
-    # success_message = "Agent %(first_name)s %(last_name)s updated successfully"
+    success_message = "Agent %(first_name)s %(last_name)s updated successfully"
+
+    def get_queryset(self):
+        supervisor_team = self.request.user.supervisor
+        return Agent.objects.filter(team=supervisor_team)
 
 
 class AgentDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     template_name = "agents/agent_delete.html"
-    model = Agent
     success_url = reverse_lazy("agent-list")
     success_message = "Agent deleted successfully"
+
+    def get_queryset(self):
+        supervisor_team = self.request.user.supervisor
+        return Agent.objects.filter(team=supervisor_team)
