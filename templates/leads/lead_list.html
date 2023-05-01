@@ -3,13 +3,14 @@
 {% block content %}
 
 <div class="container-fluid">
-    <h3 class="m-4 text-white">All Leads</h3>
+    <h3 class="ms-4 me-4 mt-4 text-white">All Leads</h3>
     <div class="row">
         <div class="col-12">
             <div class="ms-4 me-4 mb-4">
                 {% if messages %}
-                <div class="alert alert-success">
-                    {% for message in messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     {{ message }}
                     {% endfor %}
                 </div>
@@ -27,9 +28,9 @@
                                 cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="col-1">First Name</th>
-                                        <th scope="col" class="col-1">Last Name</th>
-                                        <th scope="col" class="col-1">Age</th>
+                                        <th scope="col" class="col-2">First Name</th>
+                                        <th scope="col" class="col-2">Last Name</th>
+                                        <th scope="col" class="col-2">Age</th>
                                         <th scope="col" class="col-1">Actions</th>
                                     </tr>
                                 </thead>
@@ -49,8 +50,19 @@
                                             <!-- detailModal -->
                                             {% include 'leads/lead_detail.html' %}
 
-                                            <button type="button" class="btn btn-warning btn-sm me-1">Update</button>
-                                            <button type="button" class="btn btn-danger btn-sm me-1">Delete</button>
+                                            <a href="{% url 'lead-update' lead.id %}"
+                                                class="btn btn-warning btn-sm me-1">
+                                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                            </a>
+
+                                            <!-- Button trigger deleteModal -->
+                                            <button type="button" class="btn btn-danger btn-sm me-1"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal{{ lead.id }}"
+                                                href="{% url 'lead-detail' lead.id %}">
+                                                <i class="fa-solid fa-trash-can fa-lg"></i>
+                                            </button>
+                                            <!-- deleteModal -->
+                                            {% include 'leads/lead_delete.html' %}
                                         </td>
                                     </tr>
                                     {% endfor %}
