@@ -1,10 +1,15 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 
-from .forms import LeadCreateForm
+from .forms import CustomUserCreationForm, LeadCreateForm
 from .models import Lead
+
+
+class SignupView(generic.CreateView):
+    template_name = "registration/signup.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("login")
 
 
 class Homepage(generic.TemplateView):
