@@ -62,7 +62,8 @@
                     </div>
                 </div>
                 {% else %}
-                <h5 class="alert alert-primary ms-4 me-4">No Leads for the moment</h5>
+                <h5 class="alert alert-primary ms-4 me-4">No Leads for the moment - <a href="{% url 'lead-create' %}"
+                        class="alert-link">Create a new Lead</a></h5>
                 {% endif %}
             </div>
         </div>
