@@ -1,9 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from random import randint
+
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views import generic
 
 from leads.models import Agent
+
 from .forms import AgentModelForm
 from .mixins import SupervisorAndLoginRequiredMixin
 
@@ -38,8 +41,17 @@ class AgentCreateView(
         user = form.save(commit=False)
         user.is_agent = True
         user.is_supervisor = False
+        user.set_password(f"{randint(0, 100000)}")
         user.save()
         Agent.objects.create(user=user, team=self.request.user.supervisor)
+        send_mail(
+            subject=("You are invited to be an agent"),
+            message=(
+                "You were added as an agent on SolarCRM. Please come login to start working"
+            ),
+            from_email="admin@test.com",
+            recipient_list=[user.email],
+        )
         return super(AgentCreateView, self).form_valid(form)
 
 
