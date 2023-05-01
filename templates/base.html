@@ -14,7 +14,17 @@
 
 <body class="d-flex flex-column min-vh-100">
     {% include 'navbar.html' %}
-
+    <div class="d-flex justify-content-md-end">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
     {% block content %}
     {% endblock content %}
 

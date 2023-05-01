@@ -8,17 +8,25 @@ class User(AbstractUser):
     pass
 
 
-class Agent(models.Model):
+class Supervisor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
 
 
-@receiver(post_save, sender=User)
-def post_save_agent_creation(sender, instance, created, **kwargs):
-    if created:
-        Agent.objects.create(user=instance)
+class Agent(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+# @receiver(post_save, sender=User)
+# def post_save_agent_creation(sender, instance, created, **kwargs):
+#     if created:
+#         Agent.objects.create(user=instance)
 
 
 class Lead(models.Model):
