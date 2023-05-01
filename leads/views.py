@@ -3,7 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CustomUserCreationForm, LeadCreateForm
+from .forms import CustomUserCreationForm, LeadModelForm
 from .models import Lead
 
 
@@ -31,8 +31,7 @@ class LeadDetailView(LoginRequiredMixin, generic.DetailView):
 
 class LeadCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     template_name = "leads/lead_create.html"
-    model = Lead
-    form_class = LeadCreateForm
+    form_class = LeadModelForm
     success_url = reverse_lazy("lead-list")
     success_message = "New lead %(first_name)s %(last_name)s created successfully"
 
@@ -40,7 +39,7 @@ class LeadCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
 class LeadUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     template_name = "leads/lead_update.html"
     model = Lead
-    form_class = LeadCreateForm
+    form_class = LeadModelForm
     success_url = reverse_lazy("lead-list")
     success_message = "Lead %(first_name)s %(last_name)s updated successfully"
 

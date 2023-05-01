@@ -16,7 +16,7 @@ class CustomUserCreationForm(UserCreationForm):
         )
 
 
-class LeadCreateForm(forms.ModelForm):
+class LeadModelForm(forms.ModelForm):
     class Meta:
         model = Lead
         fields = "__all__"
