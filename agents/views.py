@@ -5,9 +5,10 @@ from django.views import generic
 
 from leads.models import Agent
 from .forms import AgentModelForm
+from .mixins import SupervisorAndLoginRequiredMixin
 
 
-class AgentListView(LoginRequiredMixin, generic.ListView):
+class AgentListView(SupervisorAndLoginRequiredMixin, generic.ListView):
     template_name = "agents/agent_list.html"
     context_object_name = "agents"
 
@@ -16,7 +17,7 @@ class AgentListView(LoginRequiredMixin, generic.ListView):
         return Agent.objects.filter(team=supervisor_team)
 
 
-class AgentDetailView(LoginRequiredMixin, generic.ListView):
+class AgentDetailView(SupervisorAndLoginRequiredMixin, generic.ListView):
     template_name = "agents/agent_detail.html"
     context_object_name = "agent"
 
@@ -25,7 +26,9 @@ class AgentDetailView(LoginRequiredMixin, generic.ListView):
         return Agent.objects.filter(team=supervisor_team)
 
 
-class AgentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class AgentCreateView(
+    SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.CreateView
+):
     template_name = "agents/agent_create.html"
     form_class = AgentModelForm
     success_url = reverse_lazy("agent-list")
@@ -38,7 +41,9 @@ class AgentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateVie
         return super(AgentCreateView, self).form_valid(form)
 
 
-class AgentUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+class AgentUpdateView(
+    SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
+):
     template_name = "agents/agent_update.html"
     form_class = AgentModelForm
     success_url = reverse_lazy("agent-list")
@@ -49,7 +54,9 @@ class AgentUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateVie
         return Agent.objects.filter(team=supervisor_team)
 
 
-class AgentDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+class AgentDeleteView(
+    SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.DeleteView
+):
     template_name = "agents/agent_delete.html"
     success_url = reverse_lazy("agent-list")
     success_message = "Agent deleted successfully"
