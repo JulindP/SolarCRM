@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -21,14 +22,28 @@ class Homepage(generic.TemplateView):
 
 class LeadListView(LoginRequiredMixin, generic.ListView):
     template_name = "leads/lead_list.html"
-    model = Lead
     context_object_name = "leads"
+
+    def get_queryset(self):
+        if self.request.user.is_supervisor:
+            queryset = Lead.objects.filter(team=self.request.user.supervisor)
+        else:
+            queryset = Lead.objects.filter(team=self.request.user.agent.team)
+            queryset = queryset.filter(agent__user=self.request.user)
+        return queryset
 
 
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "leads/lead_detail.html"
-    model = Lead
     context_object_name = "lead"
+
+    def get_queryset(self):
+        if self.request.user.is_supervisor:
+            queryset = Lead.objects.filter(team=self.request.user.supervisor)
+        else:
+            queryset = Lead.objects.filter(team=self.request.user.agent.team)
+            queryset = queryset.filter(agent__user=self.request.user)
+        return queryset
 
 
 class LeadCreateView(
@@ -39,21 +54,34 @@ class LeadCreateView(
     success_url = reverse_lazy("lead-list")
     success_message = "New lead %(first_name)s %(last_name)s created successfully"
 
+    def form_valid(self, form):
+        send_mail(
+            subject="A lead has been created",
+            message="Go to the site to see the new lead",
+            from_email="test@test.com",
+            recipient_list=["test2@test.com"],
+        )
+        return super(LeadCreateView).form_valid(form)
+
 
 class LeadUpdateView(
     SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
 ):
     template_name = "leads/lead_update.html"
-    model = Lead
     form_class = LeadModelForm
     success_url = reverse_lazy("lead-list")
     success_message = "Lead %(first_name)s %(last_name)s updated successfully"
+
+    def get_queryset(self):
+        return Lead.objects.filter(team=self.request.user.supervisor)
 
 
 class LeadDeleteView(
     SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.DeleteView
 ):
     template_name = "leads/lead_delete.html"
-    model = Lead
     success_url = reverse_lazy("lead-list")
     success_message = "Lead deleted successfully"
+
+    def get_queryset(self):
+        return Lead.objects.filter(team=self.request.user.supervisor)

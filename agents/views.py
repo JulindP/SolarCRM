@@ -35,9 +35,11 @@ class AgentCreateView(
     success_message = "New agent %(first_name)s %(last_name)s created successfully"
 
     def form_valid(self, form):
-        agent = form.save(commit=False)
-        agent.team = self.request.user.supervisor
-        agent.save()
+        user = form.save(commit=False)
+        user.is_agent = True
+        user.is_supervisor = False
+        user.save()
+        Agent.objects.create(user=user, team=self.request.user.supervisor)
         return super(AgentCreateView, self).form_valid(form)
 
 
