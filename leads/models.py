@@ -23,7 +23,7 @@ def post_user_creation(sender, instance, created, **kwargs):
 
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+    team = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username

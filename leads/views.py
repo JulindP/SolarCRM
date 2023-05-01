@@ -27,6 +27,7 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "leads/lead_detail.html"
     model = Lead
+    context_object_name = "lead"
 
 
 class LeadCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
