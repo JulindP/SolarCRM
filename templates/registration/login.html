@@ -11,12 +11,13 @@
                 <i class="fa-solid fa-address-card fa-lg"></i> Login
             </div>
             <div class="card-body">
-                <form action="{% url 'login' %}" method="post">
+                <form action="" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="submit" class="btn btn-info float-right">Login</button>
                         <a href="{% url 'lead-list' %}" class="btn btn-secondary">Cancel</a>
+                        <a href="{% url 'reset_password' %}" class="btn btn-warning">Rest Password</a>
                 </form>
             </div>
         </div>

@@ -39,11 +39,14 @@ class AgentCreateView(
 
     def form_valid(self, form):
         user = form.save(commit=False)
+
         user.is_agent = True
         user.is_supervisor = False
         user.set_password(f"{randint(0, 100000)}")
         user.save()
+
         Agent.objects.create(user=user, team=self.request.user.supervisor)
+
         send_mail(
             subject=("You are invited to be an agent"),
             message=(
