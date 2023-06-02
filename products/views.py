@@ -42,17 +42,17 @@ class ProductCreateView(
 ):
     template_name = "products/product_create.html"
     form_class = ProductModelForm
-    success_url = reverse_lazy("product_list")
+    success_url = reverse_lazy("product-list")
     success_message = "New product is created successfully."
 
-    def form_valid(self, form):
-        send_mail(
-            subject="A sale has been created",
-            message="Go to the site to see the new sale",
-            from_email="test@test.com",
-            recipient_list=["test2@test.com"],
-        )
-        return super(ProductCreateView).form_valid(form)
+    # def form_valid(self, form):
+    #     send_mail(
+    #         subject="A sale has been created",
+    #         message="Go to the site to see the new sale",
+    #         from_email="test@test.com",
+    #         recipient_list=["test2@test.com"],
+    #     )
+    #     return super(ProductCreateView).form_valid(form)
 
 
 class ProductUpdateView(
@@ -61,7 +61,7 @@ class ProductUpdateView(
     template_name = "products/product_update.html"
     form_class = ProductModelForm
     model = Product
-    success_url = reverse_lazy("order-list")
+    success_url = reverse_lazy("product-list")
     success_message = "Product updated successfully"
 
     # def get_queryset(self):
@@ -71,9 +71,9 @@ class ProductUpdateView(
 class ProductDeleteView(
     SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.DeleteView
 ):
-    template_name = "products/product_detail.html"
+    template_name = "products/product_delete.html"
     model = Product
-    success_url = reverse_lazy("order-list")
+    success_url = reverse_lazy("product-list")
     success_message = "Product deleted successfully"
 
     # def get_queryset(self):

@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+
+<div class="container">
+    <h3 class="text-center m-4">Create Product</h3>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card border-success mb-3">
+                <div class=" card-header">
+                <i class="fa-solid fa-address-card fa-lg"></i> Create Product
+            </div>
+            <div class="card-body">
+                <form action="{% url 'product-create' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-info float-right">Create</button>
+                        <a href="{% url 'product-list' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
