@@ -2,71 +2,76 @@
 
 {% block content %}
 
-<div class="container-fluid">
-    <h3 class="ms-4 me-4 mt-4 text-white">All Products</h3>
-    <div class="row">
-        <div class="col-12">
-            {% if products %}
-            <div class="ms-4 me-4 mb-4">
-                <div class="card border-secondary">
-                    <div class="card-header text-white">
-                        <i class="fa-solid fa-list"></i> Product List
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-fixed table-hover text-white" style="width:100%" id="dataTable"
-                                cellspacing="0">
-                                <thead>
+    <div class="container-fluid">
+        <h3 class="ms-4 me-4 mt-4 text-white">All Products</h3>
+        <div class="row">
+            <div class="col-12">
+                {% if products %}
+                    <div class="ms-4 me-4 mb-4">
+                    <div class="card border-secondary">
+                        <div class="card-header text-white">
+                            <i class="fa-solid fa-list"></i> Product List
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-fixed table-hover text-white" style="width:100%"
+                                       id="dataTable"
+                                       cellspacing="0">
+                                    <thead>
                                     <tr>
                                         <th scope="col" class="col-2">Name</th>
                                         <th scope="col" class="col-2">Price</th>
                                         <th scope="col" class="col-2">Description</th>
+                                        <th scope="col" class="col-2">Actions</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    </thead>
+                                    <tbody>
                                     {% for product in products %}
-                                    <tr>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.price }}</td>
-                                        <td>{{ product.description }}</td>
-                                        <td>
-                                            <!-- Button trigger detailModal -->
-                                            <button type="button" class="btn btn-info btn-sm me-1"
-                                                data-bs-toggle="modal" data-bs-target="#detailModal{{ product.id }}"
-                                                href="{% url 'product-detail' product.id %}">
-                                                <i class="fa-solid fa-circle-info fa-lg"></i>
-                                            </button>
-                                            <!-- detailModal -->
-                                            {% include 'products/product_detail.html' %}
+                                        <tr>
+                                            <td>{{ product.name }}</td>
+                                            <td>{{ product.price }}</td>
+                                            <td>{{ product.description }}</td>
+                                            <td>
+                                                <!-- Button trigger detailModal -->
+                                                <button type="button" class="btn btn-info btn-sm me-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#detailModal{{ product.id }}"
+                                                        href="{% url 'product-detail' product.id %}">
+                                                    <i class="fa-solid fa-circle-info fa-lg"></i>
+                                                </button>
+                                                <!-- detailModal -->
+                                                {% include 'products/product_detail.html' %}
 
-                                            <a href="{% url 'product-update' product.id %}"
-                                                class="btn btn-warning btn-sm me-1">
-                                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                            </a>
+                                                <a href="{% url 'product-update' product.id %}"
+                                                   class="btn btn-warning btn-sm me-1">
+                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                </a>
 
-                                            <!-- Button trigger deleteModal -->
-                                            <button type="button" class="btn btn-danger btn-sm me-1"
-                                                data-bs-toggle="modal" data-bs-target="#productDeleteModal{{ product.id }}"
-                                                href="{% url 'product-detail' product.id %}">
-                                                <i class="fa-solid fa-trash-can fa-lg"></i>
-                                            </button>
-                                            <!-- deleteModal -->
-                                            {% include 'products/product_delete.html' %}
-                                        </td>
-                                    </tr>
+                                                <!-- Button trigger deleteModal -->
+                                                <button type="button" class="btn btn-danger btn-sm me-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#productDeleteModal{{ product.id }}"
+                                                        href="{% url 'product-detail' product.id %}">
+                                                    <i class="fa-solid fa-trash-can fa-lg"></i>
+                                                </button>
+                                                <!-- deleteModal -->
+                                                {% include 'products/product_delete.html' %}
+                                            </td>
+                                        </tr>
                                     {% endfor %}
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
                 {% else %}
-                <h5 class="alert alert-primary ms-4 me-4">No Products for the moment - <a href="{% url 'product-create' %}"
-                        class="alert-link">Create a new Product</a></h5>
+                    <h5 class="alert alert-primary ms-4 me-4">No Products for the moment - <a
+                            href="{% url 'product-create' %}"
+                            class="alert-link">Create a new Product</a></h5>
                 {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 {% endblock content %}

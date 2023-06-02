@@ -1,12 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views import generic
 
 from agents.mixins import SupervisorAndLoginRequiredMixin
-from .forms import CustomUserCreationForm, LeadModelForm
+from agents.forms import CustomUserCreationForm
+from .forms import LeadModelForm
 from .models import Lead
+
+
+class Homepage(generic.TemplateView):
+    template_name = "base.html"
 
 
 class SignupView(SuccessMessageMixin, generic.CreateView):
@@ -14,10 +18,6 @@ class SignupView(SuccessMessageMixin, generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login")
     success_message = "New user %(first_name)s %(last_name)s created successfully"
-
-
-class Homepage(generic.TemplateView):
-    template_name = "base.html"
 
 
 class LeadListView(LoginRequiredMixin, generic.ListView):
@@ -53,15 +53,6 @@ class LeadCreateView(
     form_class = LeadModelForm
     success_url = reverse_lazy("lead-list")
     success_message = "New lead %(first_name)s %(last_name)s created successfully"
-
-    def form_valid(self, form):
-        send_mail(
-            subject="A lead has been created",
-            message="Go to the site to see the new lead",
-            from_email="test@test.com",
-            recipient_list=["test2@test.com"],
-        )
-        return super(LeadCreateView).form_valid(form)
 
 
 class LeadUpdateView(

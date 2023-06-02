@@ -43,16 +43,7 @@ class OrderCreateView(
     template_name = "orders/order_create.html"
     form_class = OrderModelForm
     success_url = reverse_lazy("order-list")
-    success_message = "New sale is created successfully."
-
-    def form_valid(self, form):
-        send_mail(
-            subject="A sale has been created",
-            message="Go to the site to see the new sale",
-            from_email="test@test.com",
-            recipient_list=["test2@test.com"],
-        )
-        return super(OrderCreateView).form_valid(form)
+    success_message = "New order is created successfully."
 
 
 class OrderUpdateView(
@@ -62,7 +53,7 @@ class OrderUpdateView(
     form_class = OrderModelForm
     model = Order
     success_url = reverse_lazy("order-list")
-    success_message = "Sale updated successfully"
+    success_message = "Order updated successfully"
 
     # def get_queryset(self):
     #     return Order.objects.filter(team=self.request.user.supervisor)

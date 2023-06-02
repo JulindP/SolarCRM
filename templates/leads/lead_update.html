@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -13,7 +14,7 @@
             <div class="card-body">
                 <form action="" method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="submit" class="btn btn-info float-right">Update</button>
                         <a href="{% url 'lead-list' %}" class="btn btn-secondary">Cancel</a>
