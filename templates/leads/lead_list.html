@@ -11,7 +11,9 @@
                     <div class="ms-4 me-4 mb-4">
                     <div class="card border-secondary">
                         <div class="card-header text-white">
-                            <i class="fa-solid fa-list"></i> Lead List
+                            <i class="fa-solid fa-list"></i> Lead List - <a
+                                href="{% url 'category-list' %}"
+                                class="alert-link">View categories</a>
                         </div>
                         <a href="{% url 'lead-create' %}"
                            class="btn btn-primary btn-sm me-1">Create Lead
@@ -23,9 +25,14 @@
                                        cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th scope="col" class="col-2">First Name</th>
-                                        <th scope="col" class="col-2">Last Name</th>
-                                        <th scope="col" class="col-2">Age</th>
+                                        <th scope="col" class="col-1">First Name</th>
+                                        <th scope="col" class="col-1">Last Name</th>
+                                        <th scope="col" class="col-1">Age</th>
+                                        <th scope="col" class="col-1">Description</th>
+                                        <th scope="col" class="col-1">Phone Number</th>
+                                        <th scope="col" class="col-1">Email</th>
+                                        <th scope="col" class="col-1">Agent</th>
+                                        <th scope="col" class="col-1">Category</th>
                                         <th scope="col" class="col-1">Actions</th>
                                     </tr>
                                     </thead>
@@ -35,6 +42,11 @@
                                             <td>{{ lead.first_name }}</td>
                                             <td>{{ lead.last_name }}</td>
                                             <td>{{ lead.age }}</td>
+                                            <td>{{ lead.agent }}</td>
+                                            <td>{{ lead.description }}</td>
+                                            <td>{{ lead.phone_number }}</td>
+                                            <td>{{ lead.email }}</td>
+                                            <td>{{ lead.category }}</td>
                                             <td>
                                                 <!-- Button trigger detailModal -->
                                                 <button type="button" class="btn btn-info btn-sm me-1"
@@ -46,11 +58,17 @@
                                                 <!-- detailModal -->
                                                 {% include 'leads/lead_detail.html' %}
 
+                                                {% if request.user.is_supervisor %}
                                                 <a href="{% url 'lead-update' lead.id %}"
                                                    class="btn btn-warning btn-sm me-1">
                                                     <i class="fa-solid fa-pen-to-square fa-lg"></i>
                                                 </a>
-
+                                                {% else %}
+                                                <a href="{% url 'lead-category-update' lead.id %}"
+                                                   class="btn btn-warning btn-sm me-1">
+                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                </a>
+                                                {% endif %}
                                                 <!-- Button trigger deleteModal -->
                                                 <button type="button" class="btn btn-danger btn-sm me-1"
                                                         data-bs-toggle="modal"
@@ -85,9 +103,14 @@
                                            cellspacing="0">
                                         <thead>
                                         <tr>
-                                            <th scope="col" class="col-2">First Name</th>
-                                            <th scope="col" class="col-2">Last Name</th>
-                                            <th scope="col" class="col-2">Age</th>
+                                            <th scope="col" class="col-1">First Name</th>
+                                            <th scope="col" class="col-1">Last Name</th>
+                                            <th scope="col" class="col-1">Age</th>
+                                            <th scope="col" class="col-1">Description</th>
+                                            <th scope="col" class="col-1">Phone Number</th>
+                                            <th scope="col" class="col-1">Email</th>
+                                            <th scope="col" class="col-1">Agent</th>
+                                            <th scope="col" class="col-1">Category</th>
                                             <th scope="col" class="col-1">Actions</th>
                                         </tr>
                                         </thead>
@@ -97,6 +120,11 @@
                                                 <td>{{ lead.first_name }}</td>
                                                 <td>{{ lead.last_name }}</td>
                                                 <td>{{ lead.age }}</td>
+                                                <td>{{ lead.agent }}</td>
+                                                <td>{{ lead.description }}</td>
+                                                <td>{{ lead.phone_number }}</td>
+                                                <td>{{ lead.email }}</td>
+                                                <td>{{ lead.category }}</td>
                                                 <td>
                                                     <a href="{% url 'assign-agent' lead.id %}"
                                                        class="btn btn-warning btn-sm me-1">

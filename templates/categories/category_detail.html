@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid">
+
+        <h3 class="ms-4 me-4 mt-4 text-white">{{ category.name }}</h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="ms-4 me-4 mb-4">
+                    <div class="card border-secondary">
+                        <div class="card-header text-white">
+                            <i class="fa-solid fa-list"></i> {{ category.name }} List
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-fixed table-hover text-white" style="width:100%"
+                                       id="dataTable"
+                                       cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="col-2">First Name</th>
+                                        <th scope="col" class="col-2">Last Name</th>
+                                        <th scope="col" class="col-1">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for lead in category.leads.all %}
+                                        <tr>
+                                            <td>{{ lead.first_name }}</td>
+                                            <td>{{ lead.last_name }}</td>
+                                            <td>
+                                                <!-- Button trigger detailModal -->
+                                                <button type="button" class="btn btn-info btn-sm me-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#leadDetailModal{{ lead.id }}"
+                                                        href="{% url 'lead-detail' lead.id %}">
+                                                    <i class="fa-solid fa-circle-info fa-lg"></i>
+                                                </button>
+                                                <!-- detailModal -->
+                                                {% include 'leads/lead_detail.html' %}
+
+                                                <a href="{% url 'lead-category-update' lead.id %}"
+                                                   class="btn btn-warning btn-sm me-1">
+                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                </a>
+
+                                                <!-- Button trigger deleteModal -->
+                                                <button type="button" class="btn btn-danger btn-sm me-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#leadDeleteModal{{ lead.id }}"
+                                                        href="{% url 'lead-delete' lead.id %}">
+                                                    <i class="fa-solid fa-trash-can fa-lg"></i>
+                                                </button>
+                                                <!-- deleteModal -->
+                                                {% include 'leads/lead_delete.html' %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

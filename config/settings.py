@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "leads",
     "agents",
+    "category",
     "orders",
     "products",
     "crispy_forms",

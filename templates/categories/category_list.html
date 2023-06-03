@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid">
+
+        <h3 class="ms-4 me-4 mt-4 text-white">Categories</h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="ms-4 me-4 mb-4">
+                    <div class="card border-secondary">
+                        <div class="card-header text-white">
+                            <i class="fa-solid fa-list"></i> Category List
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-fixed table-hover text-white" style="width:100%"
+                                       id="dataTable"
+                                       cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="col-2">Name</th>
+                                        <th scope="col" class="col-2">Leads Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Unassigned</td>
+                                        <td>{{ unassigned_lead_count }}</td>
+                                    </tr>
+                                    {% for category in category_list %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'category-detail' category.pk %}">{{ category.name }}</a>
+                                            </td>
+                                            <td>TODO Count</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

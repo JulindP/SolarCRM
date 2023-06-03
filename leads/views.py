@@ -5,7 +5,7 @@ from django.views import generic
 
 from agents.forms import CustomUserCreationForm
 from agents.mixins import SupervisorAndLoginRequiredMixin
-from .forms import LeadModelForm, AssignAgentForm
+from .forms import LeadModelForm, AssignAgentForm, LeadCategoryUpdateForm
 from .models import Lead
 
 
@@ -36,7 +36,7 @@ class SignupView(SuccessMessageMixin, generic.CreateView):
 #         "gas_orders": gas_orders,
 #         "luce_gas_orders": luce_gas_orders,
 #     }
-#     return render(request, "leads/lead_list.html", context)
+#     return render(request, "leads/category_list.html", context)
 
 class LeadListView(LoginRequiredMixin, generic.ListView):
     template_name = "leads/lead_list.html"
@@ -81,6 +81,12 @@ class LeadCreateView(
     success_url = reverse_lazy("lead-list")
     success_message = "New lead %(first_name)s %(last_name)s created successfully"
 
+    def form_valid(self, form):
+        lead = form.save(commit=False)
+        lead.team = self.request.user.supervisor
+        lead.save()
+        return super(LeadCreateView, self).form_valid(form)
+
 
 class LeadUpdateView(
     SupervisorAndLoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
@@ -116,10 +122,25 @@ class AssignAgentView(SupervisorAndLoginRequiredMixin, generic.FormView):
             "request": self.request
         })
         return kwargs
-    
+
     def form_valid(self, form):
         agent = form.cleaned_data["agent"]
         lead = Lead.objects.get(id=self.kwargs["pk"])
         lead.agent = agent
         lead.save()
         return super(AssignAgentView, self).form_valid(form)
+
+
+class LeadCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "leads/lead_category_update.html"
+    form_class = LeadCategoryUpdateForm
+    success_url = reverse_lazy("lead-list")
+    success_message = "Lead %(first_name)s %(last_name)s category updated successfully"
+
+    def get_queryset(self):
+        if self.request.user.is_supervisor:
+            queryset = Lead.objects.filter(team=self.request.user.supervisor)
+        else:
+            queryset = Lead.objects.filter(team=self.request.user.agent.team)
+            queryset = queryset.filter(agent__user=self.request.user)
+        return queryset
