@@ -1,0 +1,55 @@
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white bg-primary mb-3" id="total-orders">
+                    <div class="card-header">
+                        <h5 class="card-title">Total Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_orders }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white bg-success mb-3" id="total-delivered">
+                    <div class="card-header">
+                        <h5 class="card-title">Luce Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ luce_orders }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white bg-warning mb-3" id="total-pending">
+                    <div class="card-header">
+                        <h5 class="card-title">Gas Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ gas_orders }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white bg-secondary mb-3" id="total-pending">
+                    <div class="card-header">
+                        <h5 class="card-title">Luce & Gas Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ luce_gas_orders }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

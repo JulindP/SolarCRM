@@ -14,6 +14,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     {% include 'navbar.html' %}
+
     <div class="d-flex justify-content-md-end">
         {% if messages %}
         {% for message in messages %}
@@ -25,7 +26,9 @@
         </div>
         {% endif %}
     </div>
+
     {% block content %}
+
     {% endblock content %}
 
     <footer class="mt-auto mb-4">
